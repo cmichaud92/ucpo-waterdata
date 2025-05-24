@@ -1,0 +1,31 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Data files
+*.csv
+*.txt
+*.xlsx
+*.sqlite
+*.parquet
+*.duckdb
+
+# Other files
+*.json
+*.log
+.DS_Store
+
+# Folders
+z_archive/
+z_trash/
+data/
+output/
+logs/
+.vscode

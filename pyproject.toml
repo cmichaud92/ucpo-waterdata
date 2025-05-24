@@ -1,0 +1,17 @@
+[project]
+name = "ucpo-waterdata"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dataretrieval>=1.0.12",
+    "datetime>=5.5",
+    "duckdb>=1.2.2",
+    "ipykernel>=6.29.5",
+    "logging>=0.4.9.6",
+    "numpy>=2.2.5",
+    "pandas>=2.2.3",
+    "pyarrow>=20.0.0",
+    "typing>=3.10.0.0",
+]

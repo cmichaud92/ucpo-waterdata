@@ -12,7 +12,7 @@ def fetch_data(
         start_date: str,
         end_date: str,
         service_code: str = 'iv'
-    ) -> Optional[pd.DataFrame]:
+        ) -> Optional[pd.DataFrame]:
     """
     Fetch data from NWIS for a given site and parameter code.
     Logs an error if the request fails.
@@ -28,18 +28,18 @@ def fetch_data(
     except Exception as e:
         logging.error(f"Error fetching data for site {site} and parameter {pcode}: {e}")
         return None
-    
+
     if df.empty:
         logging.warning(f"No data returned for site {site} and parameter {pcode}.")
         return None
-    
+
     return df
 
 
 def transform_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
     """
     Transform raw NWIS 'iv' data into standardized long format.
-    
+
     Parameters:
         df: Raw dataframe from nwis.get_record()
         site: USGS site number
@@ -53,7 +53,7 @@ def transform_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
     if df is None or df.empty:
         logging.warning(f"No data to transform for site {site} and parameter {pcode}.")
         return pd.DataFrame()
-    
+
     # Datetime is the index in the raw data
     df = df.reset_index()
 
@@ -61,7 +61,7 @@ def transform_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
     if 'datetime' not in df.columns:
         logging.error(f"Missing 'datetime' column in data for site {site} and parameter {pcode}.")
         raise ValueError("Missing 'datetime' column.")
-    
+
     # Identify value column and approval status column
     value_cols = [
         col for col in df.columns if col not in ('site_no', 'datetime') and not col.endswith('cd')
@@ -80,7 +80,7 @@ def transform_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
             f"Found: {code_cols}"
         )
         raise ValueError("Expected exactly one code column.")
-    
+
     value_col = value_cols[0]
     code_col = code_cols[0]
 
@@ -90,32 +90,33 @@ def transform_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
         'datetime': pd.to_datetime(df['datetime']),
         'parameter': pcode,
         'value': pd.to_numeric(df[value_col], errors='coerce'),
-        'approval_status': df[code_col].str[0], # Assuming first character is the status (P or A)
+        'approval_status': df[code_col].str[0],  # Assuming first character is the status (P or A)
     })
 
     # Derived field for partitioning
     df_clean['year'] = df_clean['datetime'].dt.year
-    
+
     # Drop bad rows (e.g., NaN values in 'site', 'value' or 'datetime')
     required_fields = ['site', 'datetime', 'value']
     df_clean = df_clean.dropna(subset=required_fields)
-    
+
     return df_clean
-    
+
 
 def write_to_datalake(df: pd.DataFrame, site: str, output_root: str) -> None:
     """
     Write transformed USGS IV data to partitioned parquet files in the datalake.
 
-    Parameters: 
-        df              : Transformed DataFrame with columns including ['site', 'datetime', 'parameter', 'value', 'approval_status', 'year']
+    Parameters:
+        df              : Transformed DataFrame with columns including
+                          ['site', 'datetime', 'parameter', 'value', 'approval_status', 'year']
         site            : USGS site number
         output_root     : Root directory for the datalake
     """
     if df.empty:
         logging.warning(f"No data to write for site {site}.")
         return
-    
+
     # Sort data by datetime for performance and compression
     df_sorted = df.sort_values(by='datetime')
 
@@ -148,5 +149,3 @@ def write_to_datalake(df: pd.DataFrame, site: str, output_root: str) -> None:
         except Exception as e:
             logging.error(f"Error writing data for site {site} and year {year}: {e}")
             raise
-
-

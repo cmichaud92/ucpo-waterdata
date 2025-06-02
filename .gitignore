@@ -9,6 +9,9 @@ wheels/
 # Virtual environments
 .venv
 
+# Dot-environment files
+.env
+
 # Data files
 *.csv
 *.txt

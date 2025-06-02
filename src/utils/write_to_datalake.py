@@ -2,9 +2,10 @@ import pandas as pd
 import logging
 from pathlib import Path
 import duckdb
+from typing import Union
 
 
-def write_to_datalake(df: pd.DataFrame, site: str, output_root: str) -> None:
+def write_to_datalake(df: pd.DataFrame, site: str, datalake_root: Union[str, Path]) -> None:
     """
     Write transformed USGS IV data to partitioned parquet files in the datalake.
 
@@ -12,7 +13,7 @@ def write_to_datalake(df: pd.DataFrame, site: str, output_root: str) -> None:
         df              : Transformed DataFrame with columns including
                           ['site', 'datetime', 'parameter', 'value', 'approval_status', 'year']
         site            : USGS site number
-        output_root     : Root directory for the datalake
+        datalake_root     : Root directory for the datalake
     """
     if df.empty:
         logging.warning(f"No data to write for site {site}.")
@@ -23,9 +24,9 @@ def write_to_datalake(df: pd.DataFrame, site: str, output_root: str) -> None:
 
     # Partition by year and site and write to parquet
     for year, group in df_sorted.groupby('year'):
-        output_path = Path(output_root) / "timeseries_iv" / f"site={site}" / f"year={year}"
-        output_path.mkdir(parents=True, exist_ok=True)
-        file_path = output_path / "data.parquet"
+        datalake_path = Path(datalake_root) / "timeseries_iv" / f"site={site}" / f"year={year}"
+        datalake_path.mkdir(parents=True, exist_ok=True)
+        file_path = datalake_path / "data.parquet"
         try:
             group = group.copy()
 

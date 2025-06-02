@@ -2,7 +2,7 @@ import pandas as pd
 import logging
 
 
-def transform_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
+def transform_nwis_iv_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
     """
     Transform raw NWIS 'iv' data into standardized long format.
 
@@ -65,5 +65,57 @@ def transform_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
     # Drop bad rows (e.g., NaN values in 'site', 'value' or 'datetime')
     required_fields = ['site', 'datetime', 'value']
     df_clean = df_clean.dropna(subset=required_fields)
+
+    return df_clean
+
+
+def transform_nwis_site_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Transform raw NWIS site data into standardized format.
+
+    Parameters:
+        df: Raw dataframe from nwis.get_record()
+    Returns:
+        A cleaned DataFrame with standard columns
+    """
+
+    # Set fail-safe defaults in case no data is available
+    if df is None or df.empty:
+        logging.warning("No site data to transform.")
+        return pd.DataFrame()
+
+    # Ensure required columns are present
+    required_columns = [
+        'site_no', 'station_nm', 'agency_cd', 'dec_lat_va', 'dec_long_va'
+    ]
+    """
+    standard_columns = {'site_no': 'site', 
+                        'station_nm': 'site_name', 
+                        'agency_cd': 'agency_code',
+                        'dec_lat_va': 'latitude',
+                        'dec_long_va': 'longitude',
+                        'site_tp_cd': 'site_type'}
+                        """
+    
+    for col in required_columns:
+        if col not in df.columns:
+            logging.error(f"Missing required column '{col}' in site data.")
+            raise ValueError(f"Missing required column '{col}'.")
+
+    # Construct clean output
+    df_clean = pd.DataFrame({
+        'site_code': df['site_no'],
+        'site_name': df['station_nm'],
+        'agency_code': df['agency_cd'],
+        'latitude': pd.to_numeric(df['dec_lat_va'], errors='coerce'),
+        'longitude': pd.to_numeric(df['dec_long_va'], errors='coerce'),
+        'site_type': 'stream gage',
+        'hydro_area_name': None
+    })
+
+    # Drop rows with NaN values in key columns
+    df_clean = df_clean.dropna(
+        subset=['site_code', 'site_name', 'agency_code', 
+                'latitude', 'longitude', 'site_type'])
 
     return df_clean

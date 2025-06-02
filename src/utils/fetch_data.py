@@ -5,11 +5,11 @@ import pandas as pd
 import dataretrieval.nwis as nwis
 
 
-def fetch_data(
+def fetch_nwis_data(
         site: str,
-        pcode: str,
-        start_date: str,
-        end_date: str,
+        pcode: Optional[str] = None,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
         service_code: str = 'iv'
         ) -> Optional[pd.DataFrame]:
     """

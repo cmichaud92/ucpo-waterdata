@@ -34,18 +34,18 @@ bor_sites = [
 ]
 
 cbrfc_sites = [
-    "CAMC2",   # Colorado River - Cameo, CO
-    "GJNC2",   # Gunnison River - Grand Junction, CO
-    "DOLU1",   # Dolores River - Cisco, UT
-    "GRVU1",   # Green River - Green River, UT
-    "WATU1",   # White River - Watson, UT
-    "DURU1",   # Duchesne River - Randlett, UT
-    "YDLC2",   # Yampa River - Deerlodge Park, CO
-    "GLDA3",   # Lake Powell, AZ (Colorado River)
-    "GRNU1",   # Flaming Gorge Reservoir, UT (Green River)
-    "RURC2",   # Ruedi Reservoir, CO (Frying Pan River)
-    "WORC2",   # Wolford Mountain Reservoir, CO (Muddy Creek)
-    "WFDC2",   # Williams Fork Reservoir, CO (Williams Fork River)
+    "CAMC2",   # Colorado River - Cameo, CO *usgs 09095500
+    "GJNC2",   # Gunnison River - Grand Junction, CO *usgs 09152500
+    "DOLU1",   # Dolores River - Cisco, UT *usgs 09180000
+    "GRVU1",   # Green River - Green River, UT *usgs 09315000
+    "WATU1",   # White River - Watson, UT *usgs 09306500
+    "DURU1",   # Duchesne River - Randlett, UT *usgs 09302000
+    "YDLC2",   # Yampa River - Deerlodge Park, CO *usgs 09260050
+    "GLDA3",   # Lake Powell, AZ (Colorado River) *usgs 09379900
+    "GRNU1",   # Flaming Gorge Reservoir, UT (Green River) *usgs 09106485
+    "RURC2",   # Ruedi Reservoir, CO (Frying Pan River) *usgs 09106150
+    "WORC2",   # Wolford Mountain Reservoir, CO (Muddy Creek) *usgs 09041395
+    "WFDC2",   # Williams Fork Reservoir, CO (Williams Fork River) 
     "GBYC2",   # Granby Reservoir, CO (Colorado River)
     "WCRC2",   # Willows Creek Reservoir, CO (Willow Creek)
     "GRMC2",   # Green Mountain Reservoir, CO (Blue River)
@@ -56,19 +56,24 @@ cbrfc_sites = [
 
 hydrologic_areas = pd.DataFrame({
     "site_cd": [
-        '09152500', '09095500', '09106150', '09106485', '09163500', '09306500', 
-        '09251000', '09260050', '09260000', '09261000', '09315000', '09302000', 
-        '09180000', '09328960', '09147022', '09041395', '09379900'
+        '09152500', '09095500', '09106150', '09106485', '09163500', '09306500',
+        '09251000', '09260050', '09260000', '09261000', '09315000', '09302000',
+        '09180000', '09328960', '09147022', '09041395', '09379900', '913', '914',
+        '915', '917', '919', '928', '1999', '2000', '2002', '2005'
         ],
     "hydro_area_cd": [
         'GU', 'CO', 'CO', 'CO', 'CO', 'WH', 'YA', 'YA', 'LS', 'GR',
-        'GR', 'DU', 'DO', 'CO', 'RIDGE', 'WOLF', 'POWELL'
+        'GR', 'DU', 'DO', 'CO', 'RIDGE', 'WOLF', 'POWELL', 'BLM', 'MORR',
+        'CRY', 'FLA', 'POWELL', 'STAR', 'GRA', 'GRE', 'RDI', 'WIL'
     ],
     "hydro_area_nm": [
         'Gunnison River', 'Colorado River', 'Colorado River', 'Colorado River',
         'Colorado River', 'White River', 'Yampa River', 'Yampa River',
         'Little Snake River', 'Green River', 'Green River', 'Duchesne River',
         'Dolores River', 'Colorado River', 'Ridgeway Reservoir',
-        'Wolford Mountain Reservoir', 'Lake Powell'
+        'Wolford Mountain Reservoir', 'Lake Powell', 'Blue Mesa Reservoir',
+        'Morrow Point Reservoir', 'Crystal Reservoir', 'Flaming Gorge Reservoir',
+        'Lake Powell', 'Starvation Reservoir', 'Granby Reservoir',
+        'Green Mountain Reservoir', 'Ruedi Reservoir', 'Williams Fork Reservoir'
     ],
 })

@@ -59,12 +59,17 @@ hydrologic_areas = pd.DataFrame({
         '09152500', '09095500', '09106150', '09106485', '09163500', '09306500',
         '09251000', '09260050', '09260000', '09261000', '09315000', '09302000',
         '09180000', '09328960', '09147022', '09041395', '09379900', '913', '914',
-        '915', '917', '919', '928', '1999', '2000', '2002', '2005'
+        '915', '917', '919', '928', '1999', '2000', '2002', '2005', 'CAMC2',
+        'GJNC2', 'DOLU1', 'GRVU1', 'WATU1', 'DURU1', 'YDLC2', 'GLDA3', 'GRNU1',
+        'RURC2', 'WORC2', 'WFDC2', 'GBYC2', 'WCRC2', 'GRMC2', 'CLSC2', 'MPSC2',
+        'BMDC2'
         ],
     "hydro_area_cd": [
         'GU', 'CO', 'CO', 'CO', 'CO', 'WH', 'YA', 'YA', 'LS', 'GR',
         'GR', 'DU', 'DO', 'CO', 'RIDGE', 'WOLF', 'POWELL', 'BLM', 'MORR',
-        'CRY', 'FLA', 'POWELL', 'STAR', 'GRA', 'GRE', 'RDI', 'WIL'
+        'CRY', 'FLA', 'POWELL', 'STAR', 'GRA', 'GRE', 'RDI', 'WIL', 'CO',
+        'CO', 'DO', 'GR', 'WH', 'DU', 'YA', 'POWELL', 'FLA', 'RUDI',
+        'WOLF', 'WIL', 'GRA', 'WIL', 'GRE', 'CRY', 'MORR', 'BLM'
     ],
     "hydro_area_nm": [
         'Gunnison River', 'Colorado River', 'Colorado River', 'Colorado River',
@@ -74,6 +79,61 @@ hydrologic_areas = pd.DataFrame({
         'Wolford Mountain Reservoir', 'Lake Powell', 'Blue Mesa Reservoir',
         'Morrow Point Reservoir', 'Crystal Reservoir', 'Flaming Gorge Reservoir',
         'Lake Powell', 'Starvation Reservoir', 'Granby Reservoir',
-        'Green Mountain Reservoir', 'Ruedi Reservoir', 'Williams Fork Reservoir'
+        'Green Mountain Reservoir', 'Ruedi Reservoir', 'Williams Fork Reservoir',
+        'Colorado River', 'Gunnison River', 'Dolores River', 'Green River',
+        'White River', 'Duchesne River', 'Yampa River', 'Lake Powell',
+        'Flaming Gorge Reservoir', 'Ruedi Reservoir', 'Wolford Mountain Reservoir',
+        'Williams Fork Reservoir', 'Granby Reservoir', 'Willows Creek Reservoir',
+        'Green Mountain Reservoir', 'Crystal Reservoir', 'Morrow Point Reservoir',
+        'Blue Mesa Reservoir'
     ],
+})
+
+cbrfc_sites_df = pd.DataFrame({
+    'site_cd': cbrfc_sites,
+    'site_nm': [
+        'Colorado River - Cameo, CO', 'Gunnison River - Grand Junction, CO',
+        'Dolores River - Cisco, UT', 'Green River - Green River, UT',
+        'White River - Watson, UT', 'Duchesne River - Randlett, UT',
+        'Yampa River - Deerlodge Park, CO', 'Lake Powell, AZ (Colorado River)',
+        'Flaming Gorge Reservoir, UT (Green River)',
+        'Ruedi Reservoir, CO (Frying Pan River)',
+        'Wolford Mountain Reservoir, CO (Muddy Creek)',
+        'Williams Fork Reservoir, CO (Williams Fork River)',
+        'Granby Reservoir, CO (Colorado River)',
+        'Willows Creek Reservoir, CO (Willow Creek)',
+        'Green Mountain Reservoir, CO (Blue River)',
+        'Crystal Reservoir, CO (Gunnison River)',
+        'Morrow Point Reservoir, CO (Gunnison River)',
+        'Blue Mesa Reservoir, CO (Gunnison River)'
+    ],
+    'site_dsc': [None] * len(cbrfc_sites),
+    'agency_cd': ['CBRFC'] * len(cbrfc_sites),
+    'agency_nm': ['Colorado Basin River Forecast Center'] * len(cbrfc_sites),
+    'lat_dd': [
+        39.2391463, 38.9833158, 38.797208, 38.9860831, 39.9788563,
+        40.2102778, 40.4516339, 36.9366548, None, None,
+        None, None, None, None, None, None, None, None
+    ],
+    'lon_dd': [
+        -108.2661946, -108.4506446, -109.1951142, -110.1512475, -109.1787269,
+        -109.7813889, -108.525101, -111.4840472, None, None,
+        None, None, None, None, None, None, None, None
+    ],
+    'elev_m': [None] * len(cbrfc_sites),
+    'site_type': ['Stream'] * 7 + ['Reservoir'] * 11,
+    'hydro_area_cd': [
+        'CO', 'GU', 'DO', 'GR', 'WH', 'DU', 'YA', 'POWELL', 'FLA', 'RUDI',
+        'WOLF', 'WIL', 'GRA', 'WIL', 'GRE', 'CRY', 'MORR', 'BLM'
+    ],
+    'hydro_area_nm': [
+        'Colorado River', 'Gunnison River', 'Dolores River', 'Green River',
+        'White River', 'Duchesne River', 'Yampa River', 'Lake Powell',
+        'Flaming Gorge Reservoir', 'Ruedi Reservoir', 'Wolford Mountain Reservoir',
+        'Williams Fork Reservoir', 'Granby Reservoir', 'Willows Creek Reservoir',
+        'Green Mountain Reservoir', 'Crystal Reservoir', 'Morrow Point Reservoir',
+        'Blue Mesa Reservoir'
+    ],
+    'source': [None] * len(cbrfc_sites),
+
 })

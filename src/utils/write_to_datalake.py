@@ -13,14 +13,14 @@ def write_to_datalake(df: pd.DataFrame, site: str, datalake_root: Union[str, Pat
         df              : Transformed DataFrame with columns including
                           ['site', 'datetime', 'parameter', 'value', 'approval_status', 'year']
         site            : USGS site number
-        datalake_root     : Root directory for the datalake
+        datalake_root   : Root directory for the datalake
     """
     if df.empty:
         logging.warning(f"No data to write for site {site}.")
         return
 
     # Sort data by datetime for performance and compression
-    df_sorted = df.sort_values(by='datetime')
+    df_sorted = df.sort_values(by='read_ts')
 
     # Partition by year and site and write to parquet
     for year, group in df_sorted.groupby('year'):
@@ -31,14 +31,14 @@ def write_to_datalake(df: pd.DataFrame, site: str, datalake_root: Union[str, Pat
             group = group.copy()
 
             # Strip timezone from datetime if present
-            if isinstance(group["datetime"].dtype, pd.DatetimeTZDtype):
-                group["datetime"] = group["datetime"].dt.tz_localize(None)
+            if isinstance(group["read_ts"].dtype, pd.DatetimeTZDtype):
+                group["read_ts"] = group["read_ts"].dt.tz_localize(None)
 
             # Ensure correct data types
             group = group.astype({
-                "site": "string",
-                "datetime": "datetime64[ns]",
-                "parameter": "string",
+                "site_cd": "string",
+                "read_ts": "datetime64[ns]",
+                "parameter_cd": "string",
                 "value": "float64",
                 "approval_status": "string",
                 "year": "int64"

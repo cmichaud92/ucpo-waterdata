@@ -52,18 +52,18 @@ def transform_nwis_iv_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFr
 
     # Construct clean output
     df_clean = pd.DataFrame({
-        'site': site,
-        'datetime': pd.to_datetime(df['datetime']),
-        'parameter': pcode,
+        'site_cd': site,
+        'read_ts': pd.to_datetime(df['datetime']),
+        'parameter_cd': pcode,
         'value': pd.to_numeric(df[value_col], errors='coerce'),
         'approval_status': df[code_col].str[0],  # Assuming first character is the status (P or A)
     })
 
     # Derived field for partitioning
-    df_clean['year'] = df_clean['datetime'].dt.year
+    df_clean['year'] = df_clean['read_ts'].dt.year
 
     # Drop bad rows (e.g., NaN values in 'site', 'value' or 'datetime')
-    required_fields = ['site', 'datetime', 'value']
+    required_fields = ['site_cd', 'read_ts', 'parameter_cd', 'value']
     df_clean = df_clean.dropna(subset=required_fields)
 
     return df_clean

@@ -15,3 +15,37 @@ CREATE TABLE IF NOT EXISTS site (
     create_ts TIMESTAMP,                   -- Creation timestamp
     update_ts TIMESTAMP                    -- Last update timestamp
 );
+
+CREATE TABLE IF NOT EXISTS parameter(
+    parameter_id INTEGER NOT NULL PRIMARY KEY,
+    parameter_cd TEXT NOT NULL,            -- Use source system code - used to access data
+    parameter_nm TEXT NOT NULL,            -- Use source system name
+    parameter_dsc TEXT,                    -- Use source system description
+    unit_cd TEXT NOT NULL,                 -- Unit code for the parameter
+    unit_nm TEXT NOT NULL,                 -- Unit name for the parameter
+    -- unit_dsc TEXT,                         -- Unit description
+    create_ts TIMESTAMP,                   -- Creation timestamp
+    update_ts TIMESTAMP                    -- Last update timestamp
+);
+
+CREATE TABLE IF NOT EXISTS site_parameter(
+    site_parameter_id INTEGER NOT NULL PRIMARY KEY,
+    site_id INTEGER NOT NULL,              -- Foreign key to site table
+    parameter_id INTEGER NOT NULL,         -- Foreign key to parameter table
+    site_cd TEXT NOT NULL,                 -- Use source system code - used to access data
+    parameter_cd TEXT NOT NULL,          -- Use source system code - used to access data
+    create_ts TIMESTAMP,                   -- Creation timestamp
+    update_ts TIMESTAMP,                   -- Last update timestamp
+    FOREIGN KEY (site_id) REFERENCES site(site_id),
+    FOREIGN KEY (parameter_id) REFERENCES parameter(parameter_id),
+    UNIQUE (site_id, parameter_id)         -- Ensure unique site-parameter combinations
+);
+
+CREATE TABLE IF NOT EXISTS daily_observations (
+    daily_observation_id INTEGER NOT NULL PRIMARY KEY,
+    site_parameter_id INTEGER NOT NULL,     -- Foreign key to site_parameter table
+    read_dt DATE NOT NULL,                -- Date of the observation
+    value DECIMAL(10, 3) NOT NULL,         -- Observation value
+    create_ts TIMESTAMP,                   -- Creation timestamp
+    update_ts TIMESTAMP,                   -- Last update timestamp
+);

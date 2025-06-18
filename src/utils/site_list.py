@@ -135,5 +135,104 @@ cbrfc_sites_df = pd.DataFrame({
         'Blue Mesa Reservoir'
     ],
     'source': [None] * len(cbrfc_sites),
+})
 
+params = pd.DataFrame({
+    'parameter_cd': [
+        '00060',  # Discharge, cubic feet per second
+        '00010',  # Temperature, water, degrees Celsius
+        '62614',  # Reservoir surface elevation, feet
+        '15',     # Bank storage, acre-feet
+        '29',      # Inflow, cubic feet per second
+        '42',      # Total release, cubic feet per second
+        '49',      # Pool elevation, feet
+        '17',      # Storage, acre-feet
+        '47',      # delta storage, acre-feet
+        '25',      # Evaporation, acre-feet
+        '30',      # Inflow volume, acre-feet
+        '31',      # Side inflow, cubic feet per second
+        '32',      # Side inflow volume, acre-feet
+        '33',      # Unregulated inflow, cubic feet per second
+        '34',      # Unregulated inflow volume, acre-feet
+        '1197',    # Bypass release, cubic feet per second
+        '1198',    # Bypass release volume, acre-feet
+        '39',      # Power release, cubic feet per second
+        '40',      # Power release volume, acre-feet
+        '43',      # Release volume, acre-feet
+        '46',      # Spillway release, cubic feet per second
+        '89'      # Area, acres
+    ],
+    'parameter_nm': [
+        'Discharge',
+        'Water temperature',
+        'Reservoir surface elevation',
+        'Bank storage',
+        'Inflow',
+        'Total release',
+        'Pool elevation',
+        'Storage',
+        'Delta storage',
+        'Evaporation',
+        'Inflow volume',
+        'Side inflow',
+        'Side inflow volume',
+        'Unregulated inflow',
+        'Unregulated inflow volume',
+        'Bypass release',
+        'Bypass release volume',
+        'Power release',
+        'Power release volume',
+        'Release volume',
+        'Spillway release',
+        'Area'
+    ],
+    'parameter_dsc': [None] * 22,
+    'unit_nm': [
+        'Cubic feet per second',
+        'Degrees Celsius',
+        'Feet',
+        'Acre-feet',
+        'Cubic feet per second',
+        'Cubic feet per second',
+        'Feet',
+        'Acre-feet',
+        'Acre-feet',
+        'Acre-feet',
+        'Acre-feet',
+        'Cubic feet per second',
+        'Acre-feet',
+        'Cubic feet per second',
+        'Acre-feet',
+        'Cubic feet per second',
+        'Acre-feet',
+        'Cubic feet per second',
+        'Acre-feet',
+        'Acre-feet',
+        'Cubic feet per second',
+        'Acres'
+    ],
+    'unit_cd': [
+        'cfs',  # Flow rate
+        'C',    # Temperature
+        'ft',   # Elevation
+        'af',   # Volume
+        'cfs',  # Flow rate
+        'cfs',  # Flow rate
+        'ft',   # Elevation
+        'af',   # Volume
+        'af',   # Volume
+        'af',   # Volume
+        'af',   # Volume
+        'cfs',  # Flow rate
+        'af',   # Volume
+        'cfs',  # Flow rate
+        'af',   # Volume
+        'cfs',  # Flow rate
+        'af',   # Volume
+        'cfs',  # Flow rate
+        'af',   # Volume
+        'af',   # Volume
+        'cfs',  # Flow rate
+        'ac'   # Area
+    ],
 })

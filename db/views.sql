@@ -1,17 +1,18 @@
 CREATE OR REPLACE VIEW vw_nwis_iv_local AS
     SELECT
-         s.hydro_area_nm,
-         s.site_nm,
-         s.site_type,
-         iv.site_cd,
-         iv.read_ts AT TIME ZONE 'UTC' AT TIME ZONE 'America/Denver' AS datetime_local,
-         iv.read_ts AS datetime_utc,
-         iv.parameter_cd,
-         iv.value,
-         iv.approval_status,
-         iv.year
-     FROM read_parquet('C:/Users/miesho/Projects_git/ucpo_waterdata/data/hydrology_datalake/timeseries_iv/site=*/year=*/*.parquet') iv
-     INNER JOIN site s ON iv.site_cd = s.site_cd;
+        s.hydro_area_nm,
+        s.site_nm,
+        s.site_type,
+        iv.site_cd,
+        iv.parameter_cd,
+        iv.approval_status,
+        iv.year,
+        iv.read_ts AS datetime_utc,
+        iv.read_ts AT TIME ZONE 'UTC' AT TIME ZONE 'America/Denver' AS datetime_local,
+        iv.value
+    --FROM read_parquet('C:/Users/miesho/Projects_git/ucpo_waterdata/data/hydrology_datalake/timeseries_iv/site=*/year=*/*.parquet') iv
+    FROM read_parquet('/Volumes/T7_raw_I/ucpo_waterdata/hydrology_datalake/timeseries_iv/site=*/year=*/*.parquet') iv
+    INNER JOIN site s ON iv.site_cd = s.site_cd;
 
 
 CREATE OR REPLACE VIEW vw_nwis_daily_stats_local AS
@@ -42,7 +43,8 @@ CREATE OR REPLACE VIEW vw_nwis_annual_stats_local AS
             value,
             MIN(value) OVER (PARTITION BY site_cd, parameter_cd, year) AS min_value,
             MAX(value) OVER (PARTITION BY site_cd, parameter_cd, year) AS max_value
-        FROM read_parquet('C:/Users/miesho/Projects_git/ucpo_waterdata/data/hydrology_datalake/timeseries_iv/site=*/year=*/*.parquet') iv
+        -- FROM read_parquet('C:/Users/miesho/Projects_git/ucpo_waterdata/data/hydrology_datalake/timeseries_iv/site=*/year=*/*.parquet') iv
+            FROM read_parquet('/Volumes/T7_raw_I/ucpo_waterdata/hydrology_datalake/timeseries_iv/site=*/year=*/*.parquet') iv
     )    
     SELECT
          s.hydro_area_nm,

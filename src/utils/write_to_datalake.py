@@ -1,11 +1,29 @@
 import pandas as pd
+import os
 import logging
 from pathlib import Path
 import duckdb
 from typing import Union
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
-def write_to_datalake(df: pd.DataFrame, site: str, datalake_root: Union[str, Path]) -> None:
+# Default path to the data lake files (can be overridden)
+ENV_DATA_PATH = os.getenv('DATA_STORAGE_PATH')
+if ENV_DATA_PATH:
+    DEFAULT_DATALAKE_PATH = Path(ENV_DATA_PATH) / 'hydrology_datalake'
+else:
+    DEFAULT_DATALAKE_PATH = Path(__file__).resolve().parents[1] / 'data' / 'hydrology_datalake'
+
+
+def write_to_datalake(
+        df: pd.DataFrame,
+        site: str,
+        datalake_root: Union[str, Path] = DEFAULT_DATALAKE_PATH
+        ) -> None:
     """
     Write transformed USGS IV data to partitioned parquet files in the datalake.
 

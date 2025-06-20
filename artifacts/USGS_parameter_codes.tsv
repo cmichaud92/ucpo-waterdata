@@ -2,9 +2,9 @@ parameter_cd	parameter_nm	parameter_dsc	unit_nm	unit_cd
 "00065"	Gage height		feet	ft
 "00060"	Discharge		cubic feet per second	cfs
 "00300"	Disolved oxygen	water, unfiltered	milligrams per liter	mg/l
-"00400"	pH	unfiltered, 	standard units
+"00400"	pH	unfiltered 	standard units	SU
 "00045"	Precipitation, total		inches	in
-"00095"	Specific conductance	unfiltered	microsiemens per centimeter as 25 degrees Celsius
+"00095"	Specific conductance	unfiltered	microsiemens per centimeter as 25 degrees Celsius	μS/cm
 "00020"	Temperature, air		degrees Celsius	C
 "00010"	Temperature, water		degrees Celsius	C
 "63680"	Turbidity	unfiltered, monochrome near infra-red LED light, 780-900 nm, detection angle 90 +- 2.5 degrees	formazin nephelometric units	FNU

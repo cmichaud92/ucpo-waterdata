@@ -13,8 +13,6 @@ wheels/
 .env
 
 # Data files
-*.csv
-*.txt
 *.xlsx
 *.sqlite
 *.parquet
@@ -31,4 +29,6 @@ z_trash/
 data/
 output/
 logs/
+notebook/*.csv
+notebook/*.txt
 .vscode

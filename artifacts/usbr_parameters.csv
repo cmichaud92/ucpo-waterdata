@@ -1,0 +1,20 @@
+parameter_cd,parameter_nm,parameter_type,units
+15,bank storage,bank storage,acre-feet
+47,delta storage,change in reservoir  storage,acre-feet
+25,evaporation,evaporation,acre-feet
+29,inflow,inflow,cubic feet per second (cfs)
+30,inflow volume,inflow,acre-feet
+31,side inflow,inflow,cubic feet per second (cfs)
+32,side inflow volume,inflow,acre-feet
+33,unregulated inflow,inflow,cubic feet per second (cfs)
+34,unregulated inflow volume,inflow,acre-feet
+1197,bypass release,outflow,cubic feet per second (cfs)
+1198,bypass release volume,outflow,acre-feet
+39,power release,outflow,cubic feet per second (cfs)
+40,power release volume,outflow,acre-feet
+43,release volume,outflow,acre-feet
+46,spillway release,outflow,cubic feet per second (cfs)
+42,total release,outflow,cubic feet per second (cfs)
+17,storage,storage,acre-feet
+89,area,surface area,acres
+49,pool elevation,water surface elevation,feet

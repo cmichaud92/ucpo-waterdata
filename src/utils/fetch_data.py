@@ -33,3 +33,24 @@ def fetch_nwis_data(
         return None
 
     return df
+
+
+def get_available_parameters(site: str, service_code: str = 'iv') -> list:
+    """
+    Query NWIS to get a list of available parameters for a given site and service type.
+    """
+    try:
+        meta_df, meta_info = nwis.get_info(site=site)
+    except Exception as e:
+        logging.error(f"Error fetching metadata for site {site}: {e}")
+        return []
+
+    if meta_df.empty:
+        logging.warning(f"No metadata found for site {site}.")
+        return []
+
+    # Filter for specified service code
+    if 'param_cd' in meta_df.columns and 'data_type_cd' in meta_df.columns:
+        return meta_df.loc[meta_df['data_type_cd'] == service_code, 'param_cd'].unique().tolist()
+    else:
+        return []

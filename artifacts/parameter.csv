@@ -28,3 +28,5 @@ parameter_id,parameter_cd,parameter_nm,parameter_dsc,unit_cd,unit_nm,create_ts,u
 27,00095,Specific conductance,unfiltered,μS/cm,microsiemens per centimeter as 25 degrees Celsius,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
 28,00020,"Temperature, air",,C,degrees Celsius,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
 29,63680,Turbidity,"unfiltered, monochrome near infra-red LED light, 780-900 nm, detection angle 90 +- 2.5 degrees",FNU,formazin nephelometric units,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
+30,63160,Stream surface elevation,NAVD 1988,ft,Feet,2025-06-23 14:08:58.176605,2025-06-23 14:08:58.177430
+31,00054,Reservoir storage,,af,Acre-feet,2025-06-23 14:08:58.176605,2025-06-23 14:08:58.177430

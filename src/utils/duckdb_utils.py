@@ -59,3 +59,17 @@ def run_sql_file(file_path: Path):
         except Exception as e:
             logging.error(f"❌ Error executing SQL file {file_path}: {e}")
             raise
+
+
+def refresh_db_from_csv(table_name: str, csv_path: str):
+    """
+    Refresh a DuckDB table from a CSV file.
+    """
+    with connect_duckdb() as con:
+        # Truncate the table
+        con.execute(f"DELETE FROM {table_name}")
+        # Fetch the csv data and insert it into the table
+        con.register("csv_data", pd.read_csv(f"{csv_path}/{table_name}.csv",
+                                             dtype={"site_cd": "string",
+                                                    "parameter_cd": "string"}))
+        con.execute(f"INSERT INTO {table_name} SELECT * FROM csv_data")

@@ -1,8 +1,10 @@
 from contextlib import contextmanager
 from pathlib import Path
+import pandas as pd
 import duckdb
 import logging
 import os
+import inspect
 
 try:
     from dotenv import load_dotenv
@@ -73,3 +75,47 @@ def refresh_db_from_csv(table_name: str, csv_path: str):
                                              dtype={"site_cd": "string",
                                                     "parameter_cd": "string"}))
         con.execute(f"INSERT INTO {table_name} SELECT * FROM csv_data")
+
+
+def write_meta_tables_to_csv():
+    """Write metadata tables to CSV files for inspection."""
+
+    # Get the current working directory
+    current_path = Path.cwd()
+
+    # Try to get the file path if available
+    try:
+        frame = inspect.currentframe()
+        if frame and frame.f_code.co_filename != '<stdin>':
+            current_path = Path(frame.f_code.co_filename).resolve()
+    except Exception:
+        pass  # Fall back to cwd
+
+    # Find project root by looking for marker directories
+    # (e.g., 'src', 'data', etc.) in the current path.
+    project_root = None
+    search_paths = [current_path] + list(current_path.parents)
+
+    for path in search_paths:
+        if (path / 'src').exists() and (path / 'notebook').exists():
+            project_root = path
+            break
+
+    if project_root is None:
+        # Fallback: assume cwd is the project root
+        if current_path.name == 'notebook':
+            project_root = current_path.parent
+        elif (current_path / 'src').exists():
+            project_root = current_path
+        else:
+            project_root = current_path.parent
+
+    artifacts_path = project_root / 'artifacts'
+
+    meta_tables = ['site', 'parameter', 'site_parameter']
+    for table in meta_tables:
+        with connect_duckdb() as con:
+            df = con.execute(f"SELECT * FROM {table}").df()
+            output_file = artifacts_path / f"{table}.csv"
+            df.to_csv(output_file, index=False)
+            logging.info(f"✅ Wrote {table} to {output_file}")

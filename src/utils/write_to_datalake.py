@@ -21,7 +21,7 @@ else:
 
 def write_to_datalake(
         df: pd.DataFrame,
-        site: str,
+        site_code: str,
         datalake_root: Union[str, Path] = DEFAULT_DATALAKE_PATH
         ) -> None:
     """
@@ -34,7 +34,7 @@ def write_to_datalake(
         datalake_root   : Root directory for the datalake
     """
     if df.empty:
-        logging.warning(f"No data to write for site {site}.")
+        logging.warning(f"No data to write for site {site_code}.")
         return
 
     # Sort data by datetime for performance and compression
@@ -42,7 +42,7 @@ def write_to_datalake(
 
     # Partition by year and site and write to parquet
     for year, group in df_sorted.groupby('year'):
-        datalake_path = Path(datalake_root) / "timeseries_iv" / f"site={site}" / f"year={year}"
+        datalake_path = Path(datalake_root) / "timeseries_iv" / f"site={site_code}" / f"year={year}"
         datalake_path.mkdir(parents=True, exist_ok=True)
         file_path = datalake_path / "data.parquet"
         try:
@@ -67,5 +67,5 @@ def write_to_datalake(
             duckdb.unregister("temp_df")
             logging.info(f"{len(group)} rows → {file_path}")
         except Exception as e:
-            logging.error(f"Error writing data for site {site} and year {year}: {e}")
+            logging.error(f"Error writing data for site {site_code} and year {year}: {e}")
             raise

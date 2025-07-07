@@ -12,8 +12,10 @@ CREATE TABLE IF NOT EXISTS site (
     hydro_area_cd TEXT NOT NULL,           -- Code for the water the site is located on
     hydro_area_nm TEXT NOT NULL,           -- Name of the water the site is located on
     source TEXT,                           -- Data source API or URL
-    create_ts TIMESTAMP,                   -- Creation timestamp
-    update_ts TIMESTAMP                    -- Last update timestamp
+    api_ingest_ind BOOLEAN NOT NULL DEFAULT TRUE, -- Indicates if the site is ingested via API
+    api_ingest_notes TEXT,            -- Notes on API ingestion
+    create_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- Creation timestamp
+    update_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP    -- Last update timestamp
 );
 
 CREATE TABLE IF NOT EXISTS parameter (
@@ -34,6 +36,8 @@ CREATE TABLE IF NOT EXISTS site_parameter (
     parameter_id INTEGER NOT NULL,         -- Foreign key to parameter table
     -- site_cd TEXT NOT NULL,                 -- Use source system code - used to access data
     -- parameter_cd TEXT NOT NULL,          -- Use source system code - used to access data
+    api_ingest_ind BOOLEAN NOT NULL DEFAULT TRUE, -- Indicates if the site is ingested via API
+    api_ingest_notes TEXT,            -- Notes on API ingestion
     create_ts TIMESTAMP,                   -- Creation timestamp
     update_ts TIMESTAMP,                   -- Last update timestamp
     FOREIGN KEY (site_id) REFERENCES site (site_id),

@@ -24,6 +24,7 @@ garbage.*
 # Other files
 *.json
 *.log
+*.html
 .DS_Store
 
 # Folders

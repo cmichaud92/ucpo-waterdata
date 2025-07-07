@@ -2,7 +2,7 @@ import pandas as pd
 import logging
 
 
-def transform_nwis_iv_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFrame:
+def transform_nwis_iv_data(df: pd.DataFrame, site_code: str, parameter_code: str) -> pd.DataFrame:
     """
     Transform raw NWIS 'iv' data into standardized long format.
 
@@ -17,7 +17,9 @@ def transform_nwis_iv_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFr
 
     # Set fail-safe defaults incase no data is available
     if df is None or df.empty:
-        logging.warning(f"No data to transform for site {site} and parameter {pcode}.")
+        logging.warning(
+            f"No data to transform for site {site_code} and parameter {parameter_code}."
+            )
         return pd.DataFrame()
 
     # Datetime is the index in the raw data
@@ -25,7 +27,10 @@ def transform_nwis_iv_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFr
 
     # Ensure datetime column is present
     if 'datetime' not in df.columns:
-        logging.error(f"Missing 'datetime' column in data for site {site} and parameter {pcode}.")
+        logging.error(
+            f"Missing 'datetime' column in data for site {site_code}"
+            f" and parameter {parameter_code}."
+        )
         raise ValueError("Missing 'datetime' column.")
 
     # Identify value column and approval status column
@@ -36,14 +41,16 @@ def transform_nwis_iv_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFr
 
     if len(value_cols) != 1:
         logging.error(
-            f"Expected exactly one value column for site {site} and parameter {pcode}. "
-            f"Found: {value_cols}"
+            f"Expected exactly one value column for site {site_code}"
+            f" and parameter {parameter_code}."
+            f" Found: {value_cols}"
         )
         raise ValueError("Expected exactly one value column.")
     if len(code_cols) != 1:
         logging.error(
-            f"Expected exactly one code column for site {site} and parameter {pcode}. "
-            f"Found: {code_cols}"
+            f"Expected exactly one code column for site {site_code}"
+            f" and parameter {parameter_code}."
+            f" Found: {code_cols}"
         )
         raise ValueError("Expected exactly one code column.")
 
@@ -52,9 +59,9 @@ def transform_nwis_iv_data(df: pd.DataFrame, site: str, pcode: str) -> pd.DataFr
 
     # Construct clean output
     df_clean = pd.DataFrame({
-        'site_cd': site,
+        'site_cd': site_code,
         'read_ts': pd.to_datetime(df['datetime']),
-        'parameter_cd': pcode,
+        'parameter_cd': parameter_code,
         'value': pd.to_numeric(df[value_col], errors='coerce'),
         'approval_status': df[code_col].str[0],  # Assuming first character is the status (P or A)
     })

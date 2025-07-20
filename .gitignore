@@ -6,16 +6,18 @@ dist/
 wheels/
 *.egg-info
 
-# Other files
-garbage.*
-
 # Virtual environments
-.venv
+.venv/
+venv/
 
-# Dot-environment files
+# Environment files
 .env
+.env.local
 
 # Data files
+data/
+output/
+logs/
 *.xlsx
 *.sqlite
 *.parquet
@@ -23,16 +25,15 @@ garbage.*
 
 # Other files
 *.json
-*.log
 *.html
+
+# IDE abd OS files
+.idea/
+.vscode/
 .DS_Store
 
-# Folders
+# Temporary and archive folders
 z_archive/
 z_trash/
 data/
-output/
-logs/
-notebook/*.csv
-notebook/*.txt
-.vscode
+notebook/

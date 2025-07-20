@@ -112,7 +112,7 @@ def write_meta_tables_to_csv():
 
     artifacts_path = project_root / 'artifacts'
 
-    meta_tables = ['site', 'parameter', 'site_parameter']
+    meta_tables = ['site', 'parameter', 'site_parameter', 'usbr_site_parameter', 'source']
     for table in meta_tables:
         with connect_duckdb() as con:
             df = con.execute(f"SELECT * FROM {table}").df()

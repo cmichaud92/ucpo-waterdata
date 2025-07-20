@@ -5,7 +5,7 @@ import logging
 from typing import Optional
 import pandas as pd
 import dataretrieval.nwis as nwis
-import utils.duckdb_utils as db
+import src.utils.duckdb_utils as db
 
 
 def fetch_nwis_data(
@@ -46,7 +46,7 @@ def fetch_site_parameters(site_id: str) -> Optional[list]:
     try:
         with db.connect_duckdb() as con:
             query = (
-                "SELECT p.parameter_cd"
+                "SELECT p.parameter_cd, "
                 " FROM parameter p"
                 " INNER JOIN site_parameter sp ON p.parameter_id = sp.parameter_id"
                 f" WHERE sp.site_id = '{site_id}'"

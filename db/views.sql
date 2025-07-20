@@ -1,3 +1,17 @@
+CREATE OR REPLACE VIEW vw_site_locations AS
+SELECT
+    s.hydro_area_nm,
+    so.agency_cd,
+    so.agency_nm,
+    s.site_nm,
+    s.site_cd,
+    s.site_type,
+    s.lon_dd,
+    s.lat_dd
+FROM site AS s
+INNER JOIN source AS so ON s.source_id = so.source_id
+ORDER BY s.hydro_area_nm, s.site_nm;
+
 CREATE OR REPLACE VIEW vw_nwis_iv_local AS
 SELECT
     s.hydro_area_nm,
@@ -128,3 +142,13 @@ INNER JOIN site AS s
 INNER JOIN parameter AS p
     ON a.parameter_cd = p.parameter_cd
 ORDER BY s.hydro_area_nm, s.site_nm, a.year, a.parameter_cd;
+
+CREATE OR REPLACE VIEW vw_nwis_iv_status AS
+SELECT
+    site_cd,
+    parameter_cd,
+    strftime(max(datetime_local), '%Y-%m-%d') AS max_approved_localtime
+FROM vw_nwis_iv_local
+WHERE approval_status = 'A'
+GROUP BY site_cd, parameter_cd
+ORDER BY site_cd, parameter_cd;

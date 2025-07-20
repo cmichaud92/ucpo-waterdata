@@ -1,32 +1,32 @@
-parameter_id,parameter_cd,parameter_nm,parameter_dsc,unit_cd,unit_nm,create_ts,update_ts
-1,00060,Discharge,,cfs,Cubic feet per second,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-2,00010,Water temperature,,C,Degrees Celsius,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-3,62614,Reservoir surface elevation,,ft,Feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-4,15,Bank storage,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-5,29,Inflow,,cfs,Cubic feet per second,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-6,42,Total release,,cfs,Cubic feet per second,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-7,49,Reservoir surface elevation,Pool elevation,ft,Feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-8,17,Storage,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-9,47,Delta storage,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-10,25,Evaporation,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-11,30,Inflow volume,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-12,31,Side inflow,,cfs,Cubic feet per second,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-13,32,Side inflow volume,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-14,33,Unregulated inflow,,cfs,Cubic feet per second,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-15,34,Unregulated inflow volume,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-16,1197,Bypass release,,cfs,Cubic feet per second,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-17,1198,Bypass release volume,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-18,39,Power release,,cfs,Cubic feet per second,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-19,40,Power release volume,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-20,43,Release volume,,af,Acre-feet,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-21,46,Spillway release,,cfs,Cubic feet per second,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-22,89,Area,,ac,Acres,2025-06-17 17:28:46.429526,2025-06-17 17:28:46.429880
-23,00065,Gage height,,ft,feet,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
-24,00300,Disolved oxygen,"water, unfiltered",mg/l,milligrams per liter,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
-25,00400,pH,unfiltered ,SU,standard units,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
-26,00045,"Precipitation, total",,in,inches,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
-27,00095,Specific conductance,unfiltered,μS/cm,microsiemens per centimeter as 25 degrees Celsius,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
-28,00020,"Temperature, air",,C,degrees Celsius,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
-29,63680,Turbidity,"unfiltered, monochrome near infra-red LED light, 780-900 nm, detection angle 90 +- 2.5 degrees",FNU,formazin nephelometric units,2025-06-20 17:24:35.386786,2025-06-20 17:24:35.387787
-30,63160,Stream surface elevation,NAVD 1988,ft,Feet,2025-06-23 14:08:58.176605,2025-06-23 14:08:58.177430
-31,00054,Reservoir storage,,af,Acre-feet,2025-06-23 14:08:58.176605,2025-06-23 14:08:58.177430
+parameter_id,parameter_cd,parameter_nm,parameter_interval,parameter_dsc,unit_cd,unit_nm,api_ingest_ind,api_ingest_notes,create_ts,update_ts
+1,00060,Discharge,,,cfs,Cubic feet per second,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+2,00010,Water temperature,,,C,Degrees Celsius,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+3,62614,Reservoir surface elevation,,,ft,Feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+4,15,Bank storage,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+5,29,Inflow,,,cfs,Cubic feet per second,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+6,42,Total release,,,cfs,Cubic feet per second,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+7,49,Reservoir surface elevation,,Pool elevation,ft,Feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+8,17,Storage,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+9,47,Delta storage,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+10,25,Evaporation,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+11,30,Inflow volume,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+12,31,Side inflow,,,cfs,Cubic feet per second,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+13,32,Side inflow volume,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+14,33,Unregulated inflow,,,cfs,Cubic feet per second,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+15,34,Unregulated inflow volume,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+16,1197,Bypass release,,,cfs,Cubic feet per second,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+17,1198,Bypass release volume,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+18,39,Power release,,,cfs,Cubic feet per second,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+19,40,Power release volume,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+20,43,Release volume,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+21,46,Spillway release,,,cfs,Cubic feet per second,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+22,89,Area,,,ac,Acres,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+23,00065,Gage height,,,ft,feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+24,00300,Disolved oxygen,,"water, unfiltered",mg/l,milligrams per liter,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+25,00400,pH,,unfiltered ,SU,standard units,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+26,00045,"Precipitation, total",,,in,inches,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+27,00095,Specific conductance,,unfiltered,μS/cm,microsiemens per centimeter as 25 degrees Celsius,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+28,00020,"Temperature, air",,,C,degrees Celsius,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+29,63680,Turbidity,,"unfiltered, monochrome near infra-red LED light, 780-900 nm, detection angle 90 +- 2.5 degrees",FNU,formazin nephelometric units,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+30,63160,Stream surface elevation,,NAVD 1988,ft,Feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99
+31,00054,Reservoir storage,,,af,Acre-feet,true,,2025-07-19 12:54:51.99,2025-07-19 12:54:51.99

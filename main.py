@@ -1,11 +1,11 @@
-import src.utils.duckdb_utils as db
+import database.connection as db
 import src.utils.fetch_data as fd
 import pandas as pd
 import logging
 import os
 import datetime as dt
 
-from src.utils.transform_data import transform_nwis_iv_data
+from etl.transformers import transform_nwis_iv_data
 from src.utils.write_to_datalake import write_to_datalake
 # from collections import namedtuple
 

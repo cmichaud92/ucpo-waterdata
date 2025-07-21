@@ -1,0 +1,52 @@
+ucpo_waterdata/
+├── README.md                    # Project overview and setup instructions
+├── requirements.txt             # Dependencies
+├── .env.example                # Example environment variables
+├── .gitignore
+│
+├── scripts/                     # Main executable scripts
+│   ├── initial_load.py         # One-time historical data load
+│   ├── daily_update.py         # Daily incremental updates
+│   └── backfill.py             # Backfill missing data
+│
+├── src/                        # Core library code
+│   ├── __init__.py
+│   ├── config.py               # Configuration and constants
+│   ├── database/               # Database-related code
+│   │   ├── __init__.py
+│   │   ├── connection.py       # Database connections
+│   │   └── schema.py           # Schema management
+│   ├── etl/                    # Extract, Transform, Load
+│   │   ├── __init__.py
+│   │   ├── extractors.py       # Data fetching (NWIS, HDB)
+│   │   ├── transformers.py     # Data transformation
+│   │   └── loaders.py          # Write to datalake/database
+│   └── utils/                  # Utility functions
+│       ├── __init__.py
+│       ├── logging_config.py   # Logging setup
+│       └── date_utils.py       # Date/time utilities
+│
+├── sql/                        # SQL files
+│   ├── schema.sql
+│   ├── views.sql
+│   └── queries/                # Reusable queries
+│       ├── site_status.sql
+│       └── data_quality.sql
+│
+├── notebooks/                  # Keep for exploration only
+│   ├── README.md               # What each notebook does
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_site_analysis.ipynb
+│   └── archive/                # Old notebooks
+│
+├── tests/                      # Unit tests
+│   ├── __init__.py
+│   ├── test_extractors.py
+│   └── test_transformers.py
+│
+├── data/                       # Local data (gitignored)
+│   ├── raw/
+│   ├── processed/
+│   └── metadata/
+│
+└── logs/                       # Log files (gitignored)

@@ -1,10 +1,12 @@
 from contextlib import contextmanager
 from pathlib import Path
+from typing import Union, List, Optional
 import pandas as pd
 import duckdb
 import logging
 import os
 import inspect
+
 
 try:
     from dotenv import load_dotenv
@@ -16,8 +18,10 @@ except ImportError:
 ENV_DATA_PATH = os.getenv('DATA_STORAGE_PATH')
 if ENV_DATA_PATH:
     DEFAULT_DB_PATH = Path(ENV_DATA_PATH) / 'hydrologic_data.duckdb'
+    # DEFAULT_DL_PATH = Path(ENV_DATA_PATH) / 'hydrology_datalake'
 else:
     DEFAULT_DB_PATH = Path(__file__).resolve().parents[1] / 'data' / 'hydrologic_data.duckdb'
+    # DEFAULT_DL_PATH = Path(__file__).resolve().parents[1] / 'data' / 'hydrology_datalake'
 
 
 @contextmanager
@@ -26,7 +30,8 @@ def connect_duckdb(path: Path = DEFAULT_DB_PATH):
     Context manager to handle DuckDB connection.
 
     Args:
-        path (Path): Path to the DuckDB database file.
+        path (Path): Path to the DuckDB database file. This is either set in the dot env file
+                     or defaults to 'data/hydrologic_data.duckdb' in the project root.
     Yields:
         duckdb.DuckDBPyConnection: The active database connection.
     """
@@ -45,36 +50,76 @@ def connect_duckdb(path: Path = DEFAULT_DB_PATH):
             con.close()
 
 
-def run_sql_file(file_path: Path):
+def execute_sql_script(
+        sql_file: Union[str, Path],
+        verbose: bool = False
+        ) -> List[pd.DataFrame]:
     """
-    Run a SQL file against the DuckDB database.
+    Executes the SQL script.
+    - Returns a list of DataFrames, one for each SELECT in the script.
+    - Non-SELECT statements are executed but do not return a result.
 
-    Args:
-        file_path (Path): Path to the SQL file to execute.
+    Parameters:
+    sql_file (str or Path): Path to the .sql file
+    duckdb_path (str or Path): Path to the DuckDB database file
+    verbose (bool): If True, prints each statement as it's executed
+
+    Returns:
+        List[pd.DataFrame]: Results from all SELECT statements
     """
+    sql_file = Path(sql_file)
+
+    if not sql_file.exists():
+        logging.error(f"SQL file {sql_file} does not exist.")
+        raise FileNotFoundError(f"SQL file {sql_file} does not exist.")
+
+    with open(sql_file, 'r') as file:
+        sql_script = file.read()
+
     with connect_duckdb() as con:
-        try:
-            with open(file_path, 'r') as f:
-                sql_script = f.read()
-            con.execute(sql_script)
-            logging.info(f"✅ Successfully executed SQL file: {file_path}")
-        except Exception as e:
-            logging.error(f"❌ Error executing SQL file {file_path}: {e}")
-            raise
+        statements = [stmt.strip() for stmt in sql_script.split(';') if stmt.strip()]
+        results = []
+
+        for stmt in statements:
+            if verbose:
+                print(f"Executing:\n{stmt}\n")
+
+            try:
+                if stmt.lower().startswith('select'):
+                    df = con.execute(stmt).fetchdf()
+                    results.append(df)
+                else:
+                    con.execute(stmt)
+            except Exception as e:
+                logging.error(f"Error executing statement: {stmt}\n{e}")
+                raise RuntimeError(f"Error executing statement: {stmt}\n{e}")
+
+        con.commit()
+
+    return results
 
 
-def refresh_db_from_csv(table_name: str, csv_path: str):
+def fetch_site_parameters(site_id: str) -> Optional[list]:
     """
-    Refresh a DuckDB table from a CSV file.
+    Fetch parameter codes for a given site from the duckdb database.
+    Logs an error if the query fails or returns no results.
     """
-    with connect_duckdb() as con:
-        # Truncate the table
-        con.execute(f"DELETE FROM {table_name}")
-        # Fetch the csv data and insert it into the table
-        con.register("csv_data", pd.read_csv(f"{csv_path}/{table_name}.csv",
-                                             dtype={"site_cd": "string",
-                                                    "parameter_cd": "string"}))
-        con.execute(f"INSERT INTO {table_name} SELECT * FROM csv_data")
+    try:
+        with connect_duckdb() as con:
+            query = (
+                "SELECT p.parameter_cd, "
+                " FROM parameter p"
+                " INNER JOIN site_parameter sp ON p.parameter_id = sp.parameter_id"
+                f" WHERE sp.site_id = '{site_id}'"
+            )
+            params = con.execute(query).fetchall()
+            if not params:
+                logging.warning(f"No parameters found for site {site_id}.")
+                return None
+            return [param[0] for param in params]
+    except Exception as e:
+        logging.error(f"Error fetching parameters for site {site_id}: {e}")
+        return None
 
 
 def write_meta_tables_to_csv():

@@ -5,10 +5,10 @@ import logging
 from typing import Optional
 import pandas as pd
 import dataretrieval.nwis as nwis
-import src.utils.duckdb_utils as db
+import src.database.connection as db
 
 
-def fetch_nwis_data(
+def NWISExtractor(
         site_code: str,
         parameter_code: Optional[str] = None,
         start_date: Optional[str] = None,
@@ -28,42 +28,26 @@ def fetch_nwis_data(
             parameterCd=parameter_code
         )
     except Exception as e:
-        logging.error(f"Error fetching data for site {site_code} and parameter {parameter_code}: {e}")
+        logging.error(
+            f"Error fetching data for site {site_code} and parameter {parameter_code}: {e}"
+            )
         return None
 
     if df.empty:
-        logging.warning(f"No data returned for site {site_code} and parameter {parameter_code}.")
+        logging.warning(
+            f"No data returned for site {site_code} and parameter {parameter_code}."
+        )
         return None
 
     return df
 
 
-def fetch_site_parameters(site_id: str) -> Optional[list]:
-    """
-    Fetch parameter codes for a given site from the duckdb database.
-    Logs an error if the query fails or returns no results.
-    """
-    try:
-        with db.connect_duckdb() as con:
-            query = (
-                "SELECT p.parameter_cd, "
-                " FROM parameter p"
-                " INNER JOIN site_parameter sp ON p.parameter_id = sp.parameter_id"
-                f" WHERE sp.site_id = '{site_id}'"
-            )
-            params = con.execute(query).fetchall()
-            if not params:
-                logging.warning(f"No parameters found for site {site_id}.")
-                return None
-            return [param[0] for param in params]
-    except Exception as e:
-        logging.error(f"Error fetching parameters for site {site_id}: {e}")
-        return None
-
-
+# Figure out the best integration for update dates
 def fetch_approval_status(site_cd: str) -> Optional[list]:
     # Create a named tuple for site information
-    ApprovalStatus = namedtuple('ApprovalStatus', ['parameter_code', 'max_approval_date'])
+    ApprovalStatus = namedtuple(
+        'ApprovalStatus', ['parameter_code', 'max_approval_date']
+        )
 
     query = (
         "SELECT parameter_cd, strftime(max(datetime_utc), '%Y-%m-%d') AS date"

@@ -99,7 +99,7 @@ def execute_sql_script(
     return results
 
 
-def fetch_site_parameters(site_id: str) -> Optional[list]:
+def fetch_site_parameters(site_id: int) -> Optional[list]:
     """
     Fetch parameter codes for a given site from the duckdb database.
     Logs an error if the query fails or returns no results.

@@ -41,7 +41,7 @@ def NWISExtractor(
 
     return df
 
-
+"""
 # Figure out the best integration for update dates
 def fetch_approval_status(site_cd: str) -> Optional[list]:
     # Create a named tuple for site information
@@ -64,3 +64,4 @@ def fetch_approval_status(site_cd: str) -> Optional[list]:
         return [ApprovalStatus(approval[0], approval[1]) for approval in result]
     else:
         return None
+"""
